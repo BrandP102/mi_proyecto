@@ -120,6 +120,12 @@
         margin-bottom: 5px;
     }
     
+    /* Texto por defecto cuando no hay actividades */
+    .sin-actividad {
+        text-align: justify;
+        color: #000;
+    }
+    
     /* ========== GALERÍA ========== */
     .galeria {
         display: flex;
@@ -173,7 +179,7 @@
 </div>
 
 <div class="saludo">
-    <p>Apreciado/a Doctor/a:</p>
+    <p>Apreciada Doctora:</p>
     <p>En ejecución del contrato de la referencia, presento a usted el informe de las actividades adelantadas en cumplimiento de este contrato.</p>
 </div>
 
@@ -233,7 +239,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for codigo, texto in literales %}
+        {% for codigo, texto, texto_sin_actividad in literales %}
         <tr>
             <td class="col-literal"><strong>{{ codigo }}.</strong> {{ texto }}</td>
             <td class="col-actividad">
@@ -242,7 +248,7 @@
                     {% for item in items %}
                     <div class="actividad-item">
                         <div class="descripcion">{{ item.descripcion }}</div>
-                        <div class="dependencia">Dependencia/Area: {{ item.dependencia }}</div>
+                        <div class="dependencia">Dependencia: {{ item.dependencia }}</div>
                         {% if item.fotos %}
                         <div class="galeria">
                             {% for foto in item.fotos %}
@@ -253,7 +259,7 @@
                     </div>
                     {% endfor %}
                 {% else %}
-                    <em>No se registraron actividades para este literal.</em>
+                    <div class="sin-actividad">{{ texto_sin_actividad }}</div>
                 {% endif %}
             </td>
         </tr>
@@ -262,6 +268,9 @@
 </table>
 
 <div class="firma">
+    <br>
+    <br>
+    <br>
     <hr>
     <p><strong>Brandon Alexander Puerta Taquinas</strong><br>
     CC. 1.114.900.725 de Florida-Valle del Cauca.</p>

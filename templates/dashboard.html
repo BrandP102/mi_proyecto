@@ -4,7 +4,7 @@
 {% block content %}
 
 <!-- ENCABEZADO -->
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="dashboard-header">
     <h2>📊 Registros de Actividades</h2>
     <a href="{{ url_for('crear_registro') }}" class="btn btn-success">
         + Crear Nuevo Registro
@@ -12,9 +12,9 @@
 </div>
 
 <!-- FILTRO POR RANGO DE FECHAS -->
-<div class="card mb-3 shadow-sm">
+<div class="card-personal">
     <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-muted">🔍 Filtrar por rango de fechas</h6>
+        <h6>🔍 Filtrar la tabla por rango de fechas</h6>
         <form method="GET" class="row g-2 align-items-end">
             <div class="col-md-4">
                 <label class="form-label">Desde</label>
@@ -37,16 +37,15 @@
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDoc1">
         📄 Generar Documento 1 (ACTIVIDADES)
     </button>
-    <a href="{{ url_for('generar_pdf_documento2', desde=desde, hasta=hasta) }}"
-       class="btn btn-warning" target="_blank">
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalDoc2">
         📄 Generar Documento 2 (Reporte Simple)
-    </a>
+    </button>
 </div>
 
 <!-- TABLA DE REGISTROS -->
 <div class="table-responsive">
-    <table class="table table-striped table-hover align-middle">
-        <thead class="table-dark">
+    <table class="tabla-personal">
+        <thead>
             <tr>
                 <th style="width: 10%;">Fecha</th>
                 <th style="width: 15%;">Dependencia</th>
@@ -65,13 +64,14 @@
                     {{ r.descripcion[:120] }}{% if r.descripcion|length > 120 %}...{% endif %}
                 </td>
                 <td>
-                    <span class="badge bg-info text-dark">{{ r.actividad_asociada or '-' }}</span>
+                    <span class="badge-actividad">{{ r.actividad_asociada or '-' }}</span>
                 </td>
                 <td>
                     {% for foto in r.lista_fotos() %}
                         <img src="{{ url_for('static', filename='uploads/' + foto) }}"
-                             class="rounded border"
-                             style="width:40px;height:40px;object-fit:cover;margin:2px;">
+                             class="miniatura"
+                             title="Ver foto"
+                             onclick="window.open(this.src, '_blank')">
                     {% endfor %}
                 </td>
                 <td>
@@ -94,7 +94,7 @@
 </div>
 
 {% if registros %}
-<p class="text-muted small">
+<p class="text-muted small mt-2">
     Mostrando {{ registros|length }} registro(s).
     {% if desde or hasta %}
         Filtro aplicado: 
@@ -104,7 +104,9 @@
 </p>
 {% endif %}
 
-<!-- MODAL PARA DATOS DEL DOCUMENTO 1 -->
+<!-- ============================================================ -->
+<!-- MODAL DOCUMENTO 1                                            -->
+<!-- ============================================================ -->
 <div class="modal fade" id="modalDoc1" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -116,7 +118,8 @@
                 </div>
                 <div class="modal-body">
                     <p class="text-muted small">
-                        Completa los datos generales. El PDF se abrirá en una nueva pestaña.
+                        Completa los datos generales. Solo aparecerán las actividades
+                        cuya fecha esté dentro del <strong>periodo</strong> seleccionado.
                     </p>
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -136,8 +139,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Fecha principal del informe</label>
-                            <input type="date" name="fecha_principal" class="form-control"
-                                   value="{{ desde or '' }}" required>
+                            <input type="date" name="fecha_principal" class="form-control" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Valor del contrato</label>
@@ -160,12 +162,44 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-danger">
-                        📄 Generar PDF
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">📄 Generar PDF</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODAL DOCUMENTO 2                                            -->
+<!-- ============================================================ -->
+<div class="modal fade" id="modalDoc2" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url_for('generar_pdf_documento2') }}" method="GET" target="_blank">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title">📄 Reporte Simple de Actividades</h5>
+                    <button type="button" class="btn-close btn-close-white"
+                            data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small">
+                        Selecciona el rango de fechas que quieres incluir en el reporte.
+                    </p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha Inicio</label>
+                            <input type="date" name="periodo_inicio" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha Fin</label>
+                            <input type="date" name="periodo_fin" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning">📄 Generar PDF</button>
                 </div>
             </form>
         </div>

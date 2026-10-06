@@ -2,63 +2,176 @@
 {% block title %}Nuevo Registro{% endblock %}
 
 {% block content %}
-<h2>➕ Crear Nuevo Registro</h2>
-<form method="POST" enctype="multipart/form-data" class="mt-3">
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Fecha *</label>
-            <input type="date" name="fecha" class="form-control" required>
-        </div>
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Dependencia *</label>
-            <select name="dependencia" class="form-select" required>
-                <option value="">Seleccione...</option>
-                <option>Almacén</option>
-                <option>Sistemas</option>
-                <option>Contabilidad</option>
-                <option>Tránsito</option>
-                <option>Educación</option>
-                <option>Talento Humano</option>
-                <option>Desarrollo Institucional</option>
-                <option>Otra</option>
-            </select>
-        </div>
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Actividad Asociada (A-Q)</label>
-            <select name="actividad_asociada" class="form-select">
-                <option value="">-- Ninguna --</option>
-                <option value="A">A - Equipos de cómputo</option>
-                <option value="B">B - Redes voz y datos</option>
-                <option value="C">C - Diagnóstico equipos</option>
-                <option value="D">D - Copias de seguridad</option>
-                <option value="E">E - Gobierno digital</option>
-                <option value="F">F - Herramientas tecnológicas</option>
-                <option value="G">G - SUIT</option>
-                <option value="H">H - Catálogo de datos</option>
-                <option value="I">I - Portal web</option>
-                <option value="J">J - Soporte usuarios</option>
-                <option value="K">K - PETI</option>
-                <option value="L">L - Seguridad social</option>
-                <option value="M">M - Reserva información</option>
-                <option value="N">N - Equipos necesarios</option>
-                <option value="O">O - Sugerencias supervisor</option>
-                <option value="P">P - Reportar novedades</option>
-                <option value="Q">Q - Otras actividades</option>
-            </select>
+
+<h2 class="mb-4">➕ Crear Nuevo Registro</h2>
+
+<form method="POST" enctype="multipart/form-data" id="formRegistro">
+    <div class="card-personal">
+        <div class="card-body">
+            <h6>📋 Información general</h6>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Fecha *</label>
+                    <input type="date" name="fecha" class="form-control" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Dependencia *</label>
+                    <select name="dependencia" class="form-select" required>
+                        <option value="">Seleccione...</option>
+                        <option>Almacén</option>
+                        <option>Sistemas</option>
+                        <option>Contabilidad</option>
+                        <option>Tránsito</option>
+                        <option>Educación</option>
+                        <option>Talento Humano</option>
+                        <option>Desarrollo Institucional</option>
+                        <option>Otra</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Actividad Asociada (A-Q)</label>
+                    <select name="actividad_asociada" class="form-select">
+                        <option value="">-- Ninguna --</option>
+                        <option value="A">A - Equipos de cómputo</option>
+                        <option value="B">B - Redes voz y datos</option>
+                        <option value="C">C - Diagnóstico equipos</option>
+                        <option value="D">D - Copias de seguridad</option>
+                        <option value="E">E - Gobierno digital</option>
+                        <option value="F">F - Herramientas tecnológicas</option>
+                        <option value="G">G - SUIT</option>
+                        <option value="H">H - Catálogo de datos</option>
+                        <option value="I">I - Portal web</option>
+                        <option value="J">J - Soporte usuarios</option>
+                        <option value="K">K - PETI</option>
+                        <option value="L">L - Seguridad social</option>
+                        <option value="M">M - Reserva información</option>
+                        <option value="N">N - Equipos necesarios</option>
+                        <option value="O">O - Sugerencias supervisor</option>
+                        <option value="P">P - Reportar novedades</option>
+                        <option value="Q">Q - Otras actividades</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Descripción *</label>
+                <textarea name="descripcion" class="form-control" rows="4" required></textarea>
+            </div>
         </div>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label">Descripción *</label>
-        <textarea name="descripcion" class="form-control" rows="4" required></textarea>
+    <div class="card-personal">
+        <div class="card-body">
+            <h6>📸 Fotos / Imágenes</h6>
+
+            <div class="d-flex gap-2 flex-wrap mb-2">
+                <button type="button" class="btn btn-outline-primary" id="btnCamara">
+                    📷 Tomar foto
+                </button>
+                <button type="button" class="btn btn-outline-primary" id="btnGaleria">
+                    🖼️ Elegir de galería
+                </button>
+            </div>
+
+            <input type="file" id="inputCamara" accept="image/*" capture="environment" multiple hidden>
+            <input type="file" id="inputGaleria" accept="image/*" multiple hidden>
+            <input type="file" id="inputFinal" name="fotos" multiple hidden>
+
+            <div class="form-text mb-2">
+                Puedes tomar varias fotos con la cámara o elegirlas de la galería.
+                Toca la <strong>×</strong> roja para quitar una.
+            </div>
+
+            <div id="preview" class="d-flex flex-wrap"></div>
+            <div id="contador" class="form-text mt-2"></div>
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label">Fotos / Imágenes (puedes seleccionar varias)</label>
-        <input type="file" name="fotos" class="form-control" multiple accept="image/*">
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancelar</a>
     </div>
-
-    <button type="submit" class="btn btn-primary">💾 Guardar</button>
-    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancelar</a>
 </form>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const btnCamara    = document.getElementById('btnCamara');
+    const btnGaleria   = document.getElementById('btnGaleria');
+    const inputCamara  = document.getElementById('inputCamara');
+    const inputGaleria = document.getElementById('inputGaleria');
+    const inputFinal   = document.getElementById('inputFinal');
+    const preview      = document.getElementById('preview');
+    const contador     = document.getElementById('contador');
+    const formRegistro = document.getElementById('formRegistro');
+
+    let archivosAcumulados = [];
+
+    btnCamara.addEventListener('click', () => inputCamara.click());
+    btnGaleria.addEventListener('click', () => inputGaleria.click());
+
+    inputCamara.addEventListener('change', function () {
+        agregarArchivos(this.files);
+        this.value = '';
+    });
+
+    inputGaleria.addEventListener('change', function () {
+        agregarArchivos(this.files);
+        this.value = '';
+    });
+
+    function agregarArchivos(lista) {
+        Array.from(lista).forEach(function (archivo) {
+            const duplicado = archivosAcumulados.some(a => a.name === archivo.name && a.size === archivo.size);
+            if (!duplicado) archivosAcumulados.push(archivo);
+        });
+        renderPreview();
+    }
+
+    function renderPreview() {
+        preview.innerHTML = '';
+        contador.textContent = '';
+
+        archivosAcumulados.forEach(function (archivo, index) {
+            if (archivo.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'preview-item';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+
+                    const btn = document.createElement('button');
+                    btn.textContent = '×';
+                    btn.type = 'button';
+                    btn.className = 'btn-eliminar';
+                    btn.title = 'Quitar esta foto';
+                    btn.addEventListener('click', function () {
+                        archivosAcumulados.splice(index, 1);
+                        renderPreview();
+                    });
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(btn);
+                    preview.appendChild(wrapper);
+                };
+                reader.readAsDataURL(archivo);
+            }
+        });
+
+        if (archivosAcumulados.length > 0) {
+            contador.textContent = '📸 ' + archivosAcumulados.length + ' foto(s) lista(s) para guardar.';
+        }
+    }
+
+    formRegistro.addEventListener('submit', function () {
+        if (archivosAcumulados.length === 0) return;
+
+        const dataTransfer = new DataTransfer();
+        archivosAcumulados.forEach(archivo => dataTransfer.items.add(archivo));
+        inputFinal.files = dataTransfer.files;
+    });
+</script>
 {% endblock %}

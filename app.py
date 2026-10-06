@@ -242,6 +242,10 @@ def eliminar_registro(id):
 @app.route('/pdf/documento1')
 @login_required
 def generar_pdf_documento1():
+    """
+    Genera el Documento 1 (tipo ACTIVIDADES.pdf).
+    Solo incluye registros cuya fecha esté DENTRO del periodo.
+    """
     fecha_principal_raw = request.args.get('fecha_principal', datetime.now().strftime('%Y-%m-%d'))
     periodo_inicio_raw = request.args.get('periodo_inicio', '')
     periodo_fin_raw = request.args.get('periodo_fin', '')
@@ -257,30 +261,64 @@ def generar_pdf_documento1():
         'periodo': formato_periodo(periodo_inicio_raw, periodo_fin_raw),
     }
     
+    # ============================================================
+    # Parsear el rango de fechas del periodo
+    # Solo se incluirán actividades cuya fecha esté DENTRO del rango
+    # ============================================================
+    periodo_inicio = parsear_fecha(periodo_inicio_raw)
+    periodo_fin = parsear_fecha(periodo_fin_raw)
+    
     literales = [
-        ('A', 'Apoyar en el buen funcionamiento de los equipos de cómputo y sus periféricos, de las dependencias de la administración municipal, realizando mantenimiento preventivo y correctivo.'),
-        ('B', 'Brindar apoyo en el funcionamiento del sistema de redes voz y datos de la entidad realizando mantenimiento preventivo y correctivo.'),
-        ('C', 'Prestar apoyo en la realización del diagnostico del estado actual de los equipos de computo de las dependencias de la administración.'),
-        ('D', 'Apoyar en la preservación de la seguridad de la información realizando copias de seguridad de los archivos que se reposan en las computadoras de las diferentes dependencias de la administración municipal.'),
-        ('E', 'Apoyar el profesional universitario en la implementación de la política de gobierno digital de la entidad.'),
-        ('F', 'Apoyar el fomento del uso de herramientas tecnológicas en el entorno laboral de la administración.'),
-        ('G', 'Apoyar en la automatización de tramites y servicios de la administración municipal en el portal SUIT.'),
-        ('H', 'Apoyar en el levantamiento del catalogo de datos y publicación en el portal de datos abiertos.'),
-        ('I', 'Apoyar en la publicación de información en el portal web institucional del municipio.'),
-        ('J', 'Brindar apoyo técnico a los usuarios internos en materia de recursos informáticos y atender las solicitudes de los mismos en materia de tecnologías de la información y comunicaciones.'),
-        ('K', 'Apoyar en la implementación del Plan Estratégico de Tecnologías de la Información – PETI.'),
-        ('L', 'Cumplir sus obligaciones frente al Sistema de seguridad social conforme lo dispone el articulo 50 de la ley 789 de 2002 y articulo 23 de la ley 1150 de 2007 y demás normas que las modifiquen, aclaren o adicionen.'),
-        ('M', 'Mantener y guardar reserva de la información de que conozca con ocasión a la ejecución del contrato, excepto cuando sea requerida por las autoridades competentes o persona autorizada.'),
-        ('N', 'Contar con los equipos necesarios (computador) para el desarrollo del objeto contractual.'),
-        ('O', 'Tener en cuenta las sugerencias que se importan a través del supervisor del contrato.'),
-        ('P', 'Reportar en caso de cualquier novedad o anomalía, la situación de manera inmediata al funcionario encargado de supervisión de contrato.'),
-        ('Q', 'Las demás actividades que designe el supervisor del contrato y este directamente relacionadas con el objeto del contrato.'),
+        ('A', 'Apoyar en el buen funcionamiento de los equipos de cómputo y sus periféricos, de las dependencias de la administración municipal, realizando mantenimiento preventivo y correctivo.',
+              'No preste apoyo en el buen funcionamiento de los equipos de cómputo.'),
+        ('B', 'Brindar apoyo en el funcionamiento del sistema de redes voz y datos de la entidad realizando mantenimiento preventivo y correctivo.',
+              'No preste apoyo en el funcionamiento del sistema de redes voz y datos.'),
+        ('C', 'Prestar apoyo en la realización del diagnostico del estado actual de los equipos de computo de las dependencias de la administración.',
+              'No preste apoyo en la realizacion del diagnostico del estado actual de los equipos de computos.'),
+        ('D', 'Apoyar en la preservación de la seguridad de la información realizando copias de seguridad de los archivos que se reposan en las computadoras de las diferentes dependencias de la administración municipal.',
+              'No realice apoyo en la preservación de la seguridad de la información.'),
+        ('E', 'Apoyar el profesional universitario en la implementación de la política de gobierno digital de la entidad.',
+              'No apoye en la implementación de la política de gobierno digital.'),
+        ('F', 'Apoyar el fomento del uso de herramientas tecnológicas en el entorno laboral de la administración.',
+              'No apoye el fomento del uso de herramientas tecnológicas.'),
+        ('G', 'Apoyar en la automatización de tramites y servicios de la administración municipal en el portal SUIT.',
+              'No apoye la automatización de tramites y servicios.'),
+        ('H', 'Apoyar en el levantamiento del catalogo de datos y publicación en el portal de datos abiertos.',
+              'No apoye en el levantamiento del catalogo de datos.'),
+        ('I', 'Apoyar en la publicación de información en el portal web institucional del municipio.',
+              'No apoye en la publicación de información en el portal web institucional.'),
+        ('J', 'Brindar apoyo técnico a los usuarios internos en materia de recursos informáticos y atender las solicitudes de los mismos en materia de tecnologías de la información y comunicaciones.',
+              'No brinde apoyo a los usuarios internos.'),
+        ('K', 'Apoyar en la implementación del Plan Estratégico de Tecnologías de la Información – PETI.',
+              'No apoye en la implementación del Plan Estratégico de Tecnologías de la Información – PETI.'),
+        ('L', 'Cumplir sus obligaciones frente al Sistema de seguridad social conforme lo dispone el articulo 50 de la ley 789 de 2002 y articulo 23 de la ley 1150 de 2007 y demás normas que las modifiquen, aclaren o adicionen.',
+              'No cumple con las obligaciones frente al Sistema de seguridad social.'),
+        ('M', 'Mantener y guardar reserva de la información de que conozca con ocasión a la ejecución del contrato, excepto cuando sea requerida por las autoridades competentes o persona autorizada.',
+              'No mantiene ni guarda reserva de la información.'),
+        ('N', 'Contar con los equipos necesarios (computador) para el desarrollo del objeto contractual.',
+              'No cuenta con los equipos necesarios para el desarrollo del contrato.'),
+        ('O', 'Tener en cuenta las sugerencias que se importan a través del supervisor del contrato.',
+              'No tuvo en cuenta las sugerencias.'),
+        ('P', 'Reportar en caso de cualquier novedad o anomalía, la situación de manera inmediata al funcionario encargado de supervisión de contrato.',
+              'No reporto las novedades o anomalías.'),
+        ('Q', 'Las demás actividades que designe el supervisor del contrato y este directamente relacionadas con el objeto del contrato.',
+              'No realizo actividades designadas por el supervisor.'),
     ]
     
+    # ============================================================
+    # Filtrar registros por rango de fechas (periodo)
+    # ============================================================
     actividades_por_literal = {}
-    for codigo, _ in literales:
-        registros = Registro.query.filter_by(actividad_asociada=codigo)\
-                                  .order_by(Registro.fecha.asc()).all()
+    for codigo, _, _ in literales:
+        query = Registro.query.filter_by(actividad_asociada=codigo)
+        
+        if periodo_inicio:
+            query = query.filter(Registro.fecha >= periodo_inicio)
+        if periodo_fin:
+            query = query.filter(Registro.fecha <= periodo_fin)
+        
+        registros = query.order_by(Registro.fecha.asc()).all()
+        
         lista = []
         for r in registros:
             fotos_b64 = []
@@ -313,20 +351,22 @@ def generar_pdf_documento1():
 @app.route('/pdf/documento2')
 @login_required
 def generar_pdf_documento2():
-    desde = request.args.get('desde', '')
-    hasta = request.args.get('hasta', '')
+    """
+    Genera el Documento 2 (tipo Imagen 1) con la tabla simple.
+    Filtra por rango de fechas (periodo_inicio y periodo_fin).
+    """
+    periodo_inicio_raw = request.args.get('periodo_inicio', '')
+    periodo_fin_raw = request.args.get('periodo_fin', '')
+    
+    periodo_inicio = parsear_fecha(periodo_inicio_raw)
+    periodo_fin = parsear_fecha(periodo_fin_raw)
     
     query = Registro.query
-    if desde:
-        try:
-            query = query.filter(Registro.fecha >= datetime.strptime(desde, '%Y-%m-%d').date())
-        except ValueError:
-            pass
-    if hasta:
-        try:
-            query = query.filter(Registro.fecha <= datetime.strptime(hasta, '%Y-%m-%d').date())
-        except ValueError:
-            pass
+    
+    if periodo_inicio:
+        query = query.filter(Registro.fecha >= periodo_inicio)
+    if periodo_fin:
+        query = query.filter(Registro.fecha <= periodo_fin)
     
     registros = query.order_by(Registro.fecha.asc()).all()
     

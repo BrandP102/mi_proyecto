@@ -1,0 +1,485 @@
+/* ============================================================
+   RESET Y BASE
+   ============================================================ */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar-personal {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 0.75rem 1.5rem;
+}
+
+.navbar-personal .navbar-brand {
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: #fff !important;
+    letter-spacing: 0.5px;
+}
+
+.navbar-personal .btn {
+    margin-left: 0.35rem;
+    font-size: 0.875rem;
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+    padding: 1rem;
+}
+
+.login-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem 2rem;
+    animation: fadeIn 0.5s ease;
+}
+
+.login-card .login-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.login-card h3 {
+    text-align: center;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.login-card .form-control {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #dce1e7;
+    transition: all 0.2s;
+}
+
+.login-card .form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.15);
+}
+
+.login-card .btn-primary {
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    border: none;
+    transition: transform 0.15s;
+}
+
+.login-card .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   ============================================================ */
+.main-container {
+    flex: 1;
+    padding: 1.5rem 2rem 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ============================================================
+   ENCABEZADO DEL DASHBOARD
+   ============================================================ */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.dashboard-header h2 {
+    color: #2c3e50;
+    font-weight: 700;
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+/* ============================================================
+   TARJETAS
+   ============================================================ */
+.card-personal {
+    background: #fff;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    margin-bottom: 1.25rem;
+    transition: box-shadow 0.2s;
+}
+
+.card-personal:hover {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+}
+
+.card-personal .card-body {
+    padding: 1.25rem 1.5rem;
+}
+
+.card-personal h6 {
+    color: #7f8c8d;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.15s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    border: none;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border: none;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    border: none;
+    color: #fff;
+}
+
+.btn-warning:hover {
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    border: none;
+}
+
+.btn-outline-primary {
+    border-color: #3498db;
+    color: #3498db;
+}
+
+.btn-outline-primary:hover {
+    background: #3498db;
+    color: #fff;
+}
+
+/* ============================================================
+   TABLA
+   ============================================================ */
+.tabla-personal {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.tabla-personal thead {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #fff;
+}
+
+.tabla-personal thead th {
+    padding: 0.9rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+.tabla-personal tbody tr {
+    transition: background 0.15s;
+}
+
+.tabla-personal tbody tr:hover {
+    background: #f8f9fb;
+}
+
+.tabla-personal tbody td {
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid #ecf0f1;
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+.tabla-personal tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-personal .badge-actividad {
+    background: #e8f4fd;
+    color: #2980b9;
+    font-weight: 600;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+.tabla-personal .miniatura {
+    width: 42px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #dfe6ec;
+    margin: 2px;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.tabla-personal .miniatura:hover {
+    transform: scale(1.15);
+    z-index: 10;
+    position: relative;
+}
+
+/* ============================================================
+   FORMULARIOS
+   ============================================================ */
+.form-label {
+    font-weight: 600;
+    color: #34495e;
+    font-size: 0.875rem;
+    margin-bottom: 0.4rem;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #dce1e7;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.15);
+}
+
+.form-text {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+}
+
+/* ============================================================
+   PREVISUALIZACIÓN DE IMÁGENES
+   ============================================================ */
+.preview-item {
+    position: relative;
+    display: inline-block;
+    margin: 4px;
+}
+
+.preview-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #dfe6ec;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.preview-item .btn-eliminar {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: #e74c3c;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.15s;
+}
+
+.preview-item .btn-eliminar:hover {
+    background: #c0392b;
+}
+
+/* ============================================================
+   MODALES
+   ============================================================ */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.1rem 1.5rem;
+}
+
+.modal-header.bg-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+}
+
+.modal-header.bg-warning {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
+}
+
+.modal-header .modal-title {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #ecf0f1;
+    padding: 1rem 1.5rem;
+}
+
+/* ============================================================
+   OVERLAY DE CARGA (para generar PDF)
+   ============================================================ */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(44, 62, 80, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-overlay .spinner {
+    width: 70px;
+    height: 70px;
+    border: 5px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #3498db;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin-bottom: 1.5rem;
+}
+
+.loading-overlay .loading-text {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.loading-overlay .loading-subtext {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   ALERTAS
+   ============================================================ */
+.alert {
+    border-radius: 10px;
+    border: none;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ============================================================
+   ANIMACIONES
+   ============================================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 1rem;
+    }
+    
+    .dashboard-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .tabla-personal thead th,
+    .tabla-personal tbody td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .preview-item img {
+        width: 80px;
+        height: 80px;
+    }
+}
