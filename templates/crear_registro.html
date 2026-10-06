@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Registro{% endblock %}
+
+{% block content %}
+<h2>➕ Crear Nuevo Registro</h2>
+<form method="POST" enctype="multipart/form-data" class="mt-3">
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Fecha *</label>
+            <input type="date" name="fecha" class="form-control" required>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Dependencia *</label>
+            <select name="dependencia" class="form-select" required>
+                <option value="">Seleccione...</option>
+                <option>Almacén</option>
+                <option>Sistemas</option>
+                <option>Contabilidad</option>
+                <option>Tránsito</option>
+                <option>Educación</option>
+                <option>Talento Humano</option>
+                <option>Desarrollo Institucional</option>
+                <option>Otra</option>
+            </select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Actividad Asociada (A-Q)</label>
+            <select name="actividad_asociada" class="form-select">
+                <option value="">-- Ninguna --</option>
+                <option value="A">A - Equipos de cómputo</option>
+                <option value="B">B - Redes voz y datos</option>
+                <option value="C">C - Diagnóstico equipos</option>
+                <option value="D">D - Copias de seguridad</option>
+                <option value="E">E - Gobierno digital</option>
+                <option value="F">F - Herramientas tecnológicas</option>
+                <option value="G">G - SUIT</option>
+                <option value="H">H - Catálogo de datos</option>
+                <option value="I">I - Portal web</option>
+                <option value="J">J - Soporte usuarios</option>
+                <option value="K">K - PETI</option>
+                <option value="L">L - Seguridad social</option>
+                <option value="M">M - Reserva información</option>
+                <option value="N">N - Equipos necesarios</option>
+                <option value="O">O - Sugerencias supervisor</option>
+                <option value="P">P - Reportar novedades</option>
+                <option value="Q">Q - Otras actividades</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Descripción *</label>
+        <textarea name="descripcion" class="form-control" rows="4" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fotos / Imágenes (puedes seleccionar varias)</label>
+        <input type="file" name="fotos" class="form-control" multiple accept="image/*">
+    </div>
+
+    <button type="submit" class="btn btn-primary">💾 Guardar</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
